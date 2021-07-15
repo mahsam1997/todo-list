@@ -25,6 +25,7 @@ const SubmitTasks = () => {
   useEffect(() => window.localStorage.setItem("count", count), [count]);
   useEffect(() => {
     if (localStorage !== null) {
+      console.log("dfhnkdh");
       let InputTasks = JSON.parse(localStorage.getItem("task"));
       UpdateIntoForm(InputTasks);
     }
@@ -52,7 +53,6 @@ const SubmitTasks = () => {
   };
   useEffect(() => {
     if (localStorage !== null) {
-        console.log("mvb nvm");
       let outputRemove = JSON.parse(localStorage.getItem("task"));
       UpdateIntoForm(outputRemove);
     }
@@ -70,22 +70,30 @@ const SubmitTasks = () => {
         return obj.tasks === nameTask;
       });
       let datainput = { tasks: nameTask, count: valueTask, status: "done" };
-
-      UpdateIntoForm((prevToDoList) => {
-        const newToDoList = [...prevToDoList, datainput];
-        localStorage.setItem("tasks", JSON.stringify(InputTask));
-        return newToDoList;
-      });
+      let tempTask = InputTask;
+      tempTask.push(datainput);
+      UpdateIntoForm(...tempTask);
+      // UpdateIntoForm((prevToDoList) => {
+      //     const newToDoList = [...prevToDoList, datainput];
+      //
+      //     return newToDoList;
+      // });
+      localStorage.setItem("tasks", JSON.stringify(InputTask));
     }
     if (getStatuseCheckbox === false) {
       _.remove(InputTask, function (obj) {
         return obj.tasks === nameTask;
       });
+
       let datainput = { tasks: nameTask, count: valueTask, status: "doing" };
-      UpdateIntoForm((prevToDoList) => {
-        const newToDoList = [...prevToDoList, datainput];
-        return newToDoList;
-      });
+      // UpdateIntoForm((prevToDoList) => {
+      //     const newToDoList = [...prevToDoList, datainput];
+      //     localStorage.setItem("tasks", JSON.stringify(InputTask));
+      //     return newToDoList;
+      // });
+      let tempTask = InputTask;
+      tempTask.push(datainput);
+      UpdateIntoForm(...tempTask);
       localStorage.setItem("tasks", JSON.stringify(InputTask));
       console.log(InputTask);
     }
@@ -99,14 +107,10 @@ const SubmitTasks = () => {
   }, []);
 
   const selecttaskssubmited = (countCheckBoxTask) => {
-      if (selecttasks.length!==0) {
-        let arrayaboutSelectTask = _.remove(selecttasks, function (counts) {
-            return counts === countCheckBoxTask;
-          });
-      }
-    
-    // if (arrayaboutSelectTask.length === 0) {
-        else{
+    let arrayaboutSelectTask = _.remove(selecttasks, function (counts) {
+      return counts === countCheckBoxTask;
+    });
+    if (arrayaboutSelectTask.length === 0) {
       let tempSelectTask = selecttasks;
       tempSelectTask.push(countCheckBoxTask);
       setSelectTask(tempSelectTask);
@@ -115,6 +119,7 @@ const SubmitTasks = () => {
       //     return newToDoList;
       // });
     }
+    localStorage.setItem("selecttasks", JSON.stringify(selecttasks));
   };
   useEffect(() => {
     if (localStorage !== null) {
@@ -385,69 +390,71 @@ const SubmitTasks = () => {
             <div className=" col-12 offset-md-1 col-md-10  mb-3 ">
               <table className="table borderbtndelet table-striped table-borderless backshowsetitem">
                 <tbody>
-                  {InputTask.map((item, index) => {
-                    return (
-                      <>
-                        <tr key={index}>
-                          <td
-                            className="aligntextbutton "
-                            style={{ width: "25%" }}
-                          >
-                            <button
-                              type="button"
-                              className="btn-lg borderbtndelet font"
-                              name="id"
-                              onClick={() => RemoveTask(InputTask[index].count)}
-                            >
-                              <i className="btn fas fa-trash-alt"></i>
-                            </button>
-                          </td>
-                          <td style={{ width: "40%" }}>
-                            <h5
-                              className="text pt-2 font"
-                              style={{ color: "black" }}
-                            >
-                              {item.status === "done" ? (
-                                <>
-                                  <strike>{item.tasks}</strike>
-                                </>
-                              ) : (
-                                <>{item.tasks}</>
-                              )}
-                            </h5>
-                          </td>
-                          <td style={{ width: "20%" }}>
-                            <input
-                              className="form-check-input Select"
-                              type="checkbox"
-                              value={InputTask[index].count}
-                              name={InputTask[index].tasks}
-                              defaultChecked={item.status === "done"}
-                              onClick={selectTask}
-                              style={{ width: "100px", height: "30px" }}
-                            />
-                          </td>
-                          <td>
-                            <input
-                              className="form-check-input SelectTask"
-                              value={InputTask[index].count}
-                              type="checkbox"
-                              name="examplecheckbox"
-                              defaultChecked={
-                                selecttasks.findIndex(
-                                  (e) => e === InputTask[index].count
-                                ) > -1
-                              }
-                              onClick={() =>
-                                selecttaskssubmited(InputTask[index].count)
-                              }
-                              style={{ width: "100px", height: "30px" }}
-                            />
-                          </td>
-                        </tr>
-                      </>
-                    );
-                  })}
+                      {InputTask.map((item, index) => {
+                        return (
+                          <>
+                            <tr key={index}>
+                              <td
+                                className="aligntextbutton "
+                                style={{ width: "25%" }}
+                              >
+                                <button
+                                  type="button"
+                                  className="btn-lg borderbtndelet font"
+                                  name="id"
+                                  onClick={() =>
+                                    RemoveTask(InputTask[index].count)
+                                  }
+                                >
+                                  <i className="btn fas fa-trash-alt"></i>
+                                </button>
+                              </td>
+                              <td style={{ width: "40%" }}>
+                                <h5
+                                  className="text pt-2 font"
+                                  style={{ color: "black" }}
+                                >
+                                  {item.status === "done" ? (
+                                    <>
+                                      <strike>{item.tasks}</strike>
+                                    </>
+                                  ) : (
+                                    <>{item.tasks}</>
+                                  )}
+                                </h5>
+                              </td>
+                              <td style={{ width: "20%" }}>
+                                <input
+                                  className="form-check-input Select"
+                                  type="checkbox"
+                                  value={InputTask[index].count}
+                                  name={InputTask[index].tasks}
+                                  defaultChecked={item.status === "done"}
+                                  onClick={selectTask}
+                                  style={{ width: "100px", height: "30px" }}
+                                />
+                              </td>
+                              <td>
+                                <input
+                                  className="form-check-input SelectTask"
+                                  value={InputTask[index].count}
+                                  type="checkbox"
+                                  name="examplecheckbox"
+                                  defaultChecked={
+                                    selecttasks.findIndex(
+                                      (e) => e === InputTask[index].count
+                                    ) > -1
+                                  }
+                                  onClick={() =>
+                                    selecttaskssubmited(InputTask[index].count)
+                                  }
+                                  style={{ width: "100px", height: "30px" }}
+                                />
+                              </td>
+                            </tr>
+                          </>
+                        );
+                      })}
                 </tbody>
               </table>
             </div>
