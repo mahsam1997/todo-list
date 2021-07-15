@@ -1,0 +1,49 @@
+@font-face {font-family: "B Nazanin";
+    src: url("//db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.eot"); 
+    src: url("//db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.eot?#iefix") format("embedded-opentype"), 
+       url("//db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.woff2") format("woff2"),
+       url("//db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.woff") format("woff"),
+       url("//db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.ttf") format("truetype"),
+       url("//db.onlinewebfonts.com/t/3671adca6f650c92b83f906e49656986.svg#B Nazanin") format("svg"); }
+.text{
+   text-align: right;
+}
+.font{
+    font-family:'B Nazanin';
+}
+.border{
+    box-shadow: 5px 5px rgb(182, 179, 179);
+}
+
+.color{
+    color: rgb(12, 12, 12);
+}
+@media(min-width:992px){
+    .margin{
+        margin-top: -30px;
+    }
+}
+.aligntextbutton{
+    text-align: center;
+}
+.borderbtndelet{
+border: 0px;
+}
+
+.btn a:hover{
+    border:0px ;
+}
+.btnborderrediose{
+    box-shadow: 10px 10px rgb(165, 164, 164);
+}
+.backimg{
+    background-image: url(img/imageonline-gifspeed-8699303.gif);
+    background-size: cover;
+    height: 100%;
+   padding-bottom: 100px;
+}
+.backshowsetitem{
+    border-radius: 5px;
+    
+    background-color: rgb(206, 195, 195);
+}
